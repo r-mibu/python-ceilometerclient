@@ -203,7 +203,7 @@ def _restore_shadowed_arg(shadowed, observed):
                 '(only settable by admin users).')
 @utils.arg('-r', '--resource-id', metavar='<RESOURCE_ID>', required=True,
            help='ID of the resource.')
-@utils.arg('-m', '--meter-name', metavar='<METER_NAME>', required=True,
+@utils.arg('-m', '--meter-name', metavar='<METER_NAME>',
            action=NotEmptyAction, help='The meter name.')
 @utils.arg('--meter-type', metavar='<METER_TYPE>', required=True,
            help='The meter type.')
@@ -581,14 +581,14 @@ def common_alarm_gnocchi_resources_arguments(create=False):
            help='Length of each period (seconds) to evaluate over.')
 @utils.arg('--evaluation-periods', type=int, metavar='<COUNT>',
            help='Number of periods to evaluate over.')
-@utils.arg('-m', '--meter-name', metavar='<METRIC>', required=True,
+@utils.arg('-m', '--meter-name', metavar='<METRIC>',
            help='Metric to evaluate against.')
 @utils.arg('--statistic', metavar='<STATISTIC>',
            help='Statistic to evaluate, one of: ' + str(STATISTICS) + '.')
 @utils.arg('--comparison-operator', metavar='<OPERATOR>',
            help='Operator to compare with, one of: ' + str(ALARM_OPERATORS) +
            '.')
-@utils.arg('--threshold', type=float, metavar='<THRESHOLD>', required=True,
+@utils.arg('--threshold', type=float, metavar='<THRESHOLD>',
            help='Threshold to evaluate against.')
 @utils.arg('--matching-metadata', dest='matching_metadata',
            metavar='<Matching Metadata>', action='append', default=None,
@@ -599,6 +599,10 @@ def common_alarm_gnocchi_resources_arguments(create=False):
            default=False,
            help=('True if actions should be repeatedly notified '
                  'while alarm remains in target state.'))
+@utils.arg('--type', dest='type', metavar='<TYPE>',
+           help='Alarm type.')
+@utils.arg('--event-type', dest='event_type', metavar='<EVENT_TYPE>',
+           help='Event type for event alarm.')
 @_restore_shadowed_arg('project_id', 'alarm_project_id')
 @_restore_shadowed_arg('user_id', 'alarm_user_id')
 def do_alarm_create(cc, args={}):

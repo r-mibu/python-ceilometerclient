@@ -123,6 +123,9 @@ class AlarmManager(base.Manager):
                 kwargs.setdefault('threshold_rule', {})[field] = kwargs[field]
                 del kwargs[field]
 
+        rule = '%s_rule' % kwargs['type']
+        kwargs[rule] = kwargs.get(rule, {})
+
         if 'matching_metadata' in kwargs:
             query = []
             for key in kwargs['matching_metadata']:
@@ -130,7 +133,11 @@ class AlarmManager(base.Manager):
                               'op': 'eq',
                               'value': kwargs['matching_metadata'][key]})
             del kwargs['matching_metadata']
-            kwargs['threshold_rule']['query'] = query
+            kwargs[rule]['query'] = query
+
+        if 'event_type' in kwargs:
+            kwargs[rule]['event_type'] = kwargs['event_type']
+            del kwargs['event_type']
 
     @staticmethod
     def _merge_time_constraints(existing_tcs, kwargs):
